@@ -1,0 +1,88 @@
+:py:mod:`manybodytensor.module`
+===============================
+
+.. py:module:: manybodytensor.module
+
+.. autoapi-nested-parse::
+
+   CUDA-enabled MBTA calculations
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   manybodytensor.module.kl
+   manybodytensor.module.get_eta
+   manybodytensor.module.get_h
+   manybodytensor.module.MBTA
+
+
+
+.. py:function:: kl(P, Q, xp = cp)
+
+   Kullback-Leibler divergence.
+
+   :param P: P tensor
+   :param Q: Q tensor
+   :param xp: Array module, either numpy (CPU) or cupy
+   :type xp: ModuleType
+
+   :returns: KL divergence.
+
+
+.. py:function:: get_eta(Q, D, xp = cp)
+
+   Eta tensor.
+
+   :param Q: Q tensor
+   :param D: Dimensionality
+   :param xp: Array module, either numpy (CPU) or cupy
+   :type xp: ModuleType
+
+   :returns: Eta tensor.
+
+
+.. py:function:: get_h(theta, D, xp = cp)
+
+   H tensor.
+
+   :param theta: Theta tensor
+   :param D: Dimensionality
+   :param xp: Array module, either numpy (CPU) or cupy
+   :type xp: ModuleType
+
+   :returns: Updated theta.
+
+
+.. py:function:: MBTA(X, B = None, order = 2, n_iter = 10, lr = 1.0, eps = 1e-05, error_tol = 1e-05, ngd = True, verbose = True, gpu = True, exit_abs = True, dtype = None)
+
+   Compute many-body tensor approximation.
+
+   :param X: Input tensor.
+   :param B: B tensor.
+   :param order: Order of default tensor B, if not provided.
+   :param n_iter: Maximum number of iteration.
+   :param lr: Learning rate.
+   :param eps: (see paper).
+   :param error_tol: KL divergence tolerance for the iteration.
+   :param ngd: Use natural gradient.
+   :param verbose: Print debug messages.
+   :param gpu: Use GPU (CUDA or ROCm depending on the installed CuPy version).
+   :param exit_abs: Previous implementation (wrongly?) uses kl- kl_prev as iteration exit criterion.
+                    Use abs(kl - kl_prev) instead.
+   :param dtype: By default, the data-type is inferred from the input data.
+
+   :returns: KL divergence history.
+             scaleX: Scaled X tensor.
+             Q: Q tensor.
+             theta: Theta.
+   :rtype: all_history_kl
+
+
