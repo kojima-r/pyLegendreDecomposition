@@ -2,7 +2,7 @@
 name = "LegendreDecomposition"
 version = "0.1.0"
 description = ""
-authors = ["giprayogo <prayogo.genki.imam@advancesoft.jp>"]
+authors = ["Ryosuke Kojima <kojima.ryosuke.8e@kyoto-u.ac.jp>" , "giprayogo <prayogo.genki.imam@advancesoft.jp>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
