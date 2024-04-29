@@ -15,7 +15,7 @@ This project contains the following three python implementation of Legendre deco
   - The same method is used for the Faster implementation and GPU, and switching is done by enabling or disabling the GPU.
 
 ## Project structure
-- `LegendreDecomposition`: Main module
+- `legendre_decomp`: Main module
 - `docs`: Documentation
 - `tests`: Functional tests
 - `scripts`: Benchmark scripts

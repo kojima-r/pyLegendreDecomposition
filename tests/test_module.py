@@ -2,9 +2,9 @@
 """Test consistency between original and current implementation."""
 import numpy as np
 
-from LegendreDecomposition import LD as LD_cupy
-from LegendreDecomposition.naive import LD
-from LegendreDecomposition.utils import index_channel_B, ring_decomposition_B
+from legendre_decomp import LD as LD_cupy
+from legendre_decomp.naive import LD
+from legendre_decomp.utils import index_channel_B, ring_decomposition_B
 
 gpu=True
 

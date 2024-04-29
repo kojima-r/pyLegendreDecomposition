@@ -1,12 +1,9 @@
 [tool.poetry]
-name = "LegendreDecomposition"
+name = "legendre_decomp"
 version = "0.1.0"
 description = ""
 authors = ["Ryosuke Kojima <kojima.ryosuke.8e@kyoto-u.ac.jp>" , "giprayogo <prayogo.genki.imam@advancesoft.jp>"]
 readme = "README.md"
-packages = [
-    { include = "LegendreDecomposition" }
-]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.11.0 || >3.11.0,<4.0"
