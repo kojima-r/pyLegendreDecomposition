@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "manybodytensor"
+name = "LegendreDecomposition"
 version = "0.1.0"
 description = ""
 authors = ["giprayogo <prayogo.genki.imam@advancesoft.jp>"]

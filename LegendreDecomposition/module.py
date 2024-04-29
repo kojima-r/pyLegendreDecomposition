@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""CUDA-enabled MBTA calculations"""
+"""CUDA-enabled LegendreDecomposition calculations"""
 from types import ModuleType
 
 import numpy as np
@@ -65,8 +65,7 @@ def get_h(theta: NDArray[np.float_], D: int, xp: ModuleType = cp) -> NDArray[np.
     return theta
 
 
-def MBTA(
-    X: NDArray[np.float_],
+def LD(X: NDArray[np.float_],
     B: NDArray[np.intp] | list[tuple[int, ...]] | None = None,
     order: int = 2,
     n_iter: int = 10,

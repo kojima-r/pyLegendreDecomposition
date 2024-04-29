@@ -51,7 +51,7 @@ def get_h(theta: NDArray[np.float_], D: int) -> NDArray[np.float_]:
     return theta
 
 
-def MBTA(
+def LD(
     X: NDArray[np.float_],
     B: NDArray[np.intp] | list[tuple[int, ...]] | None = None,
     order: int = 2,

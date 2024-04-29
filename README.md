@@ -1,4 +1,4 @@
-# README
+# Legendre decomposition implementation
 
 ## How to build documentation (need `sphinx`)
 
