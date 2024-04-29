@@ -2,11 +2,19 @@
 """CUDA-enabled MBTA calculations"""
 from types import ModuleType
 
-import cupy as cp
 import numpy as np
-from cupyx.scipy.special import logsumexp as cupy_logsumexp
 from numpy.typing import NDArray
 from scipy.special import logsumexp as scipy_logsumexp
+
+try:
+    import cupy as cp
+    from cupyx.scipy.special import logsumexp as cupy_logsumexp
+except ImportError:
+    import numpy as cp
+    from scipy.special import logsumexp as cupy_logsumexp
+    def get_array_module(X):
+        return np
+    cp.get_array_module = get_array_module
 
 from .utils import default_B
 
