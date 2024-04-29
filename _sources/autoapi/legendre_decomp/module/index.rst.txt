@@ -1,22 +1,16 @@
-:py:mod:`legendredecomposition`
-===============================
+:py:mod:`legendre_decomp.module`
+================================
 
-.. py:module:: legendredecomposition
+.. py:module:: legendre_decomp.module
 
+.. autoapi-nested-parse::
 
-Submodules
-----------
-.. toctree::
-   :titlesonly:
-   :maxdepth: 1
-
-   module/index.rst
-   naive/index.rst
-   utils/index.rst
+   CUDA-enabled LegendreDecomposition calculations
 
 
-Package Contents
-----------------
+
+Module Contents
+---------------
 
 
 Functions
@@ -24,29 +18,15 @@ Functions
 
 .. autoapisummary::
 
-   legendredecomposition.get_array_module
-   legendredecomposition.default_B
-   legendredecomposition.kl
-   legendredecomposition.get_eta
-   legendredecomposition.get_h
-   legendredecomposition.LD
+   legendre_decomp.module.get_array_module
+   legendre_decomp.module.kl
+   legendre_decomp.module.get_eta
+   legendre_decomp.module.get_h
+   legendre_decomp.module.LD
 
 
 
 .. py:function:: get_array_module(X)
-
-
-.. py:function:: default_B(shape, order, xp = np)
-
-   Vectorized implementation of the default B tensor.
-
-   :param shape: Shape of the corresponding X tensor.
-   :param order: Order of the B tensor.
-   :param xp: Array module, either numpy (CPU) or cupy (CUDA/GPU)
-   :type xp: ModuleType
-
-   :returns: Default B tensor of specified order.
-   :rtype: array-like
 
 
 .. py:function:: kl(P, Q, xp = cp)

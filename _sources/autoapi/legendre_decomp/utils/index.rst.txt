@@ -1,7 +1,7 @@
-:py:mod:`legendredecomposition.utils`
-=====================================
+:py:mod:`legendre_decomp.utils`
+===============================
 
-.. py:module:: legendredecomposition.utils
+.. py:module:: legendre_decomp.utils
 
 .. autoapi-nested-parse::
 
@@ -18,9 +18,9 @@ Functions
 
 .. autoapisummary::
 
-   legendredecomposition.utils.default_B
-   legendredecomposition.utils.ring_decomposition_B
-   legendredecomposition.utils.index_channel_B
+   legendre_decomp.utils.default_B
+   legendre_decomp.utils.ring_decomposition_B
+   legendre_decomp.utils.index_channel_B
 
 
 

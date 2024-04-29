@@ -1,7 +1,7 @@
-:py:mod:`legendredecomposition.naive`
-=====================================
+:py:mod:`legendre_decomp.naive`
+===============================
 
-.. py:module:: legendredecomposition.naive
+.. py:module:: legendre_decomp.naive
 
 .. autoapi-nested-parse::
 
@@ -18,10 +18,10 @@ Functions
 
 .. autoapisummary::
 
-   legendredecomposition.naive.kl
-   legendredecomposition.naive.get_eta
-   legendredecomposition.naive.get_h
-   legendredecomposition.naive.LD
+   legendre_decomp.naive.kl
+   legendre_decomp.naive.get_eta
+   legendre_decomp.naive.get_h
+   legendre_decomp.naive.LD
 
 
 
