@@ -26,8 +26,8 @@ depending on the system's installed CUDA Toolkit version.
 Other options for installing CuPy can be found
 `here <https://docs.cupy.dev/en/stable/install.html>`_
 
-Installing manybodytensor
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Installing LegendreDecomposition
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Install using either ``poetry`` or ``pip``.
 
@@ -48,7 +48,7 @@ Pip
 Project structure
 -----------------
 
-- ``manybodytensor/``: Main module
+- ``legendredecomposition/``: Main module
 - ``docs/``: Documentation
 - ``tests/``: Functional tests
 - ``scripts/``: Benchmark scripts

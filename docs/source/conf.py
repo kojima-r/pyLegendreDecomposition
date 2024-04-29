@@ -6,7 +6,7 @@
 # Project information
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "manybodytensor"
+project = "LegendreDecomposition"
 copyright = "2024, giprayogo"
 author = "giprayogo"
 release = "0.1.0"
@@ -38,4 +38,4 @@ html_theme_options = {"navbar_align": "left"}
 napoleon_google_docstring = True
 
 # AutoAPI settings
-autoapi_dirs = ["../../manybodytensor"]
+autoapi_dirs = ["../../legendredecomposition"]
