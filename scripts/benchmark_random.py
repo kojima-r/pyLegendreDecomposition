@@ -5,8 +5,8 @@ import sys
 
 import numpy as np
 
-from legendre_decom import LD
-from legendre_decom.naive import LD as LD_naive
+from legendre_decomp import LD
+from legendre_decomp.naive import LD as LD_naive
 
 
 def main():
