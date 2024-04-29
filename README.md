@@ -13,6 +13,11 @@ This project contains the following three python implementation of Legendre deco
 - GPU implementation:
   - Using CuPy to further change NumPy code to GPU-executable code
   - The same method is used for the Faster implementation and GPU, and switching is done by enabling or disabling the GPU.
+## Documents
+
+[API reference](https://kojima-r.github.io/pyLegendreDecomposition/autoapi/index.html)
+
+[Benchmark results](https://kojima-r.github.io/pyLegendreDecomposition/benchmarks.html)
 
 ## Project structure
 - `legendre_decomp`: Main module
