@@ -1,4 +1,7 @@
 # Legendre decomposition implementation
+
+[![GitHub Pages](https://github.com/kojima-r/pyLegendreDecomposition/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/kojima-r/pyLegendreDecomposition/actions/workflows/gh-pages.yml)
+
 This project contains the following three python implementation of Legendre decomposition and Many-body Approximation for Non-negative Tensors.
 
 - Naïve implementation:
