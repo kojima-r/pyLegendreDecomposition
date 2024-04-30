@@ -42,13 +42,13 @@ all_history_kl,scaleX,Q,Hq = LD(X,order=2)
 - Q: Q tensor
 - theta: Theta
     
-## Documents
+## Documents / notebook
 
 [API reference](https://kojima-r.github.io/pyLegendreDecomposition/autoapi/index.html)
 
 [Benchmark results](https://kojima-r.github.io/pyLegendreDecomposition/benchmarks.html)
 
-[Colab](https://colab.research.google.com/drive/10P1hVJZvEv51GdnGNjMKk2qTjIZ7XwpF?usp=sharing)
+[Colaboratory notebook](https://colab.research.google.com/drive/10P1hVJZvEv51GdnGNjMKk2qTjIZ7XwpF?usp=sharing)
 
 ## Project structure
 - `legendre_decomp`: Main module
