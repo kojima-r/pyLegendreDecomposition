@@ -75,7 +75,7 @@ def LD(X: NDArray[np.float_],
     ngd: bool = True,
     verbose: bool = True,
     gpu: bool = True,
-    exit_abs: bool = True,
+    exit_abs: bool = False,
     dtype: np.dtype | None = None,
 ) -> tuple[list[list[float]], np.float_, NDArray[np.float_], NDArray[np.float_]]:
     """Compute many-body tensor approximation.
