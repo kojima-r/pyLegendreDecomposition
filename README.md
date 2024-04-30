@@ -13,11 +13,42 @@ This project contains the following three python implementation of Legendre deco
 - GPU implementation:
   - Using CuPy to further change NumPy code to GPU-executable code
   - The same method is used for the Faster implementation and GPU, and switching is done by enabling or disabling the GPU.
+## Installation
+
+Installation of pyLegendreDecomposition
+```
+pip install git+https://github.com/kojima-r/pyLegendreDecomposition.git
+```
+
+Installation of Cupy
+```
+pip install  cupy-cuda12x
+```
+Please change the `cuda12x` as appropriate.
+See the cupy manual for details.
+
+https://docs.cupy.dev/en/stable/install.html
+
+## Simple Usage
+```python
+from legendre_decomp import LD
+all_history_kl,scaleX,Q,Hq = LD(X,order=2)
+```
+
+- X: a original input tensor
+- order: an order parameter of many-body approximation
+- all_history_kl: KL divergence history
+- scaleX: Scaled X tensor
+- Q: Q tensor
+- theta: Theta
+    
 ## Documents
 
 [API reference](https://kojima-r.github.io/pyLegendreDecomposition/autoapi/index.html)
 
 [Benchmark results](https://kojima-r.github.io/pyLegendreDecomposition/benchmarks.html)
+
+[Colab](https://colab.research.google.com/drive/10P1hVJZvEv51GdnGNjMKk2qTjIZ7XwpF?usp=sharing)
 
 ## Project structure
 - `legendre_decomp`: Main module
