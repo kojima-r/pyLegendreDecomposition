@@ -41,7 +41,8 @@ all_history_kl,scaleX,Q,Hq = LD(X,order=2)
 - scaleX: Scaled X tensor
 - Q: Q tensor
 - theta: Theta
-    
+
+See [API reference of LD](https://kojima-r.github.io/pyLegendreDecomposition/autoapi/legendre_decomp/module/index.html#legendre_decomp.module.LD) for details.
 ## Documents / notebook
 
 [API reference](https://kojima-r.github.io/pyLegendreDecomposition/autoapi/index.html)
