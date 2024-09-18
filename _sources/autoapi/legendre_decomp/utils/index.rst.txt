@@ -1,5 +1,5 @@
-:py:mod:`legendre_decomp.utils`
-===============================
+legendre_decomp.utils
+=====================
 
 .. py:module:: legendre_decomp.utils
 
@@ -9,12 +9,8 @@
 
 
 
-Module Contents
----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
@@ -23,6 +19,8 @@ Functions
    legendre_decomp.utils.index_channel_B
 
 
+Module Contents
+---------------
 
 .. py:function:: default_B(shape, order, xp = np)
 

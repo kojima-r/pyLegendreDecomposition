@@ -1,5 +1,5 @@
-:py:mod:`legendre_decomp.module`
-================================
+legendre_decomp.module
+======================
 
 .. py:module:: legendre_decomp.module
 
@@ -9,25 +9,22 @@
 
 
 
-Module Contents
----------------
-
-
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
-   legendre_decomp.module.get_array_module
+   legendre_decomp.module.xp_get
    legendre_decomp.module.kl
    legendre_decomp.module.get_eta
    legendre_decomp.module.get_h
    legendre_decomp.module.LD
 
 
+Module Contents
+---------------
 
-.. py:function:: get_array_module(X)
-
+.. py:function:: xp_get(val)
 
 .. py:function:: kl(P, Q, xp = cp)
 
@@ -65,7 +62,7 @@ Functions
    :returns: Updated theta.
 
 
-.. py:function:: LD(X, B = None, order = 2, n_iter = 10, lr = 1.0, eps = 1e-05, error_tol = 1e-05, ngd = True, verbose = True, gpu = True, exit_abs = False, dtype = None)
+.. py:function:: LD(X, B = None, order = 2, n_iter = 10, lr = 1.0, eps = 1e-05, error_tol = 1e-05, ngd = True, ngd_lstsq = False, verbose = True, gpu = True, exit_abs = False, dtype = None)
 
    Compute many-body tensor approximation.
 
@@ -77,6 +74,7 @@ Functions
    :param eps: (see paper).
    :param error_tol: KL divergence tolerance for the iteration.
    :param ngd: Use natural gradient.
+   :param ngd_lstsq: Use natural gradient conputed by lstsq to avoid singular matrix.
    :param verbose: Print debug messages.
    :param gpu: Use GPU (CUDA or ROCm depending on the installed CuPy version).
    :param exit_abs: Previous implementation (wrongly?) uses kl- kl_prev as iteration exit criterion.

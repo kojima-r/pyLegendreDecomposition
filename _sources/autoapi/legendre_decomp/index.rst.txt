@@ -1,30 +1,26 @@
-:py:mod:`legendre_decomp`
-=========================
+legendre_decomp
+===============
 
 .. py:module:: legendre_decomp
 
 
 Submodules
 ----------
+
 .. toctree::
-   :titlesonly:
    :maxdepth: 1
 
-   module/index.rst
-   naive/index.rst
-   utils/index.rst
-
-
-Package Contents
-----------------
+   /autoapi/legendre_decomp/module/index
+   /autoapi/legendre_decomp/naive/index
+   /autoapi/legendre_decomp/utils/index
 
 
 Functions
-~~~~~~~~~
+---------
 
 .. autoapisummary::
 
-   legendre_decomp.get_array_module
+   legendre_decomp.xp_get
    legendre_decomp.default_B
    legendre_decomp.kl
    legendre_decomp.get_eta
@@ -32,9 +28,10 @@ Functions
    legendre_decomp.LD
 
 
+Package Contents
+----------------
 
-.. py:function:: get_array_module(X)
-
+.. py:function:: xp_get(val)
 
 .. py:function:: default_B(shape, order, xp = np)
 
@@ -85,7 +82,7 @@ Functions
    :returns: Updated theta.
 
 
-.. py:function:: LD(X, B = None, order = 2, n_iter = 10, lr = 1.0, eps = 1e-05, error_tol = 1e-05, ngd = True, verbose = True, gpu = True, exit_abs = False, dtype = None)
+.. py:function:: LD(X, B = None, order = 2, n_iter = 10, lr = 1.0, eps = 1e-05, error_tol = 1e-05, ngd = True, ngd_lstsq = False, verbose = True, gpu = True, exit_abs = False, dtype = None)
 
    Compute many-body tensor approximation.
 
@@ -97,6 +94,7 @@ Functions
    :param eps: (see paper).
    :param error_tol: KL divergence tolerance for the iteration.
    :param ngd: Use natural gradient.
+   :param ngd_lstsq: Use natural gradient conputed by lstsq to avoid singular matrix.
    :param verbose: Print debug messages.
    :param gpu: Use GPU (CUDA or ROCm depending on the installed CuPy version).
    :param exit_abs: Previous implementation (wrongly?) uses kl- kl_prev as iteration exit criterion.
