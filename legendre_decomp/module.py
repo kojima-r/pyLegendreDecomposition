@@ -9,17 +9,20 @@ from scipy.special import logsumexp as scipy_logsumexp
 try:
     import cupy as cp
     from cupyx.scipy.special import logsumexp as cupy_logsumexp
+    def xp_get(val):
+        return val.get()
 except ImportError:
     import numpy as cp
     from scipy.special import logsumexp as cupy_logsumexp
     def get_array_module(X):
         return np
     cp.get_array_module = get_array_module
-
+    def xp_get(val):
+        return val
 from .utils import default_B
 
 
-def kl(P: NDArray[np.float_], Q: NDArray[np.float_], xp: ModuleType = cp) -> np.float_:
+def kl(P: NDArray[np.float64], Q: NDArray[np.float64], xp: ModuleType = cp) -> np.float64:
     """Kullback-Leibler divergence.
 
     Args:
@@ -33,7 +36,7 @@ def kl(P: NDArray[np.float_], Q: NDArray[np.float_], xp: ModuleType = cp) -> np.
     return xp.sum(P * xp.log(P / Q)) - xp.sum(P) + xp.sum(Q)
 
 
-def get_eta(Q: NDArray[np.float_], D: int, xp: ModuleType = cp) -> NDArray[np.float_]:
+def get_eta(Q: NDArray[np.float64], D: int, xp: ModuleType = cp) -> NDArray[np.float64]:
     """Eta tensor.
 
     Args:
@@ -49,7 +52,7 @@ def get_eta(Q: NDArray[np.float_], D: int, xp: ModuleType = cp) -> NDArray[np.fl
     return Q
 
 
-def get_h(theta: NDArray[np.float_], D: int, xp: ModuleType = cp) -> NDArray[np.float_]:
+def get_h(theta: NDArray[np.float64], D: int, xp: ModuleType = cp) -> NDArray[np.float64]:
     """H tensor.
 
     Args:
@@ -65,7 +68,7 @@ def get_h(theta: NDArray[np.float_], D: int, xp: ModuleType = cp) -> NDArray[np.
     return theta
 
 
-def LD(X: NDArray[np.float_],
+def LD(X: NDArray[np.float64],
     B: NDArray[np.intp] | list[tuple[int, ...]] | None = None,
     order: int = 2,
     n_iter: int = 10,
@@ -73,11 +76,12 @@ def LD(X: NDArray[np.float_],
     eps: float = 1.0e-5,
     error_tol: float = 1.0e-5,
     ngd: bool = True,
+    ngd_lstsq: bool = False,
     verbose: bool = True,
     gpu: bool = True,
     exit_abs: bool = False,
     dtype: np.dtype | None = None,
-) -> tuple[list[list[float]], np.float_, NDArray[np.float_], NDArray[np.float_]]:
+) -> tuple[list[list[float]], np.float64, NDArray[np.float64], NDArray[np.float64]]:
     """Compute many-body tensor approximation.
 
     Args:
@@ -89,6 +93,7 @@ def LD(X: NDArray[np.float_],
         eps: (see paper).
         error_tol: KL divergence tolerance for the iteration.
         ngd: Use natural gradient.
+        ngd_lstsq: Use natural gradient conputed by lstsq to avoid singular matrix.
         verbose: Print debug messages.
         gpu: Use GPU (CUDA or ROCm depending on the installed CuPy version).
         exit_abs: Previous implementation (wrongly?) uses kl- kl_prev as iteration exit criterion.
@@ -107,21 +112,23 @@ def LD(X: NDArray[np.float_],
 
     if exit_abs:
 
-        def within_tolerance(kld: np.float_, prev_kld: np.float_):
+        def within_tolerance(kld: np.float64, prev_kld: np.float64):
             return abs(prev_kld - kld) < error_tol
     else:
 
-        def within_tolerance(kld: np.float_, prev_kld: np.float_):
+        def within_tolerance(kld: np.float64, prev_kld: np.float64):
             return prev_kld - kld < error_tol
 
+    xp = cp.get_array_module(X)
     if gpu:
         X = cp.asarray(X, dtype=dtype)
         eps = cp.asarray(eps, dtype=dtype)
         lr = cp.asarray(lr, dtype=dtype)
         logsumexp = cupy_logsumexp
+        if xp==np and verbose:
+            print("GPU mode is disabled because cupy module does not installed")
     else:
         logsumexp = scipy_logsumexp
-    xp = cp.get_array_module(X)
 
     if verbose:
         print("Constructing B")
@@ -172,8 +179,13 @@ def LD(X: NDArray[np.float_],
         # update theta_b
         if ngd:
             # theta_b[1:] -= lr*np.linalg.pinv(G[1:,1:])@(eta_b[1:]-eta_hat_b[1:])
-            v = xp.linalg.solve(GG[1:, 1:], lr * (eta_b[1:] - eta_hat_b[1:]))
-            theta_b[1:] -= v
+            if ngd_lstsq:
+                v = xp.linalg.lstsq(GG[1:, 1:], lr * (eta_b[1:] - eta_hat_b[1:]), rcond=None)[0]
+                theta_b[1:] -= v
+            else:
+                v = xp.linalg.solve(GG[1:, 1:], lr * (eta_b[1:] - eta_hat_b[1:]))
+                theta_b[1:] -= v
+
         else:
             theta_b -= lr * (eta_b - eta_hat_b)
         # theta_b=>theta
@@ -203,7 +215,7 @@ def LD(X: NDArray[np.float_],
 
     all_history_kl.append([float(x) for x in history_kl])
     if gpu:
-        scaleX = scaleX.get()  # type: ignore
-        Q = Q.get()  # type: ignore
-        theta = theta.get()  # type: ignore
+        scaleX = xp_get(scaleX)  # type: ignore
+        Q = xp_get(Q)  # type: ignore
+        theta = xp_get(theta)  # type: ignore
     return all_history_kl, scaleX, Q, theta  # type: ignore

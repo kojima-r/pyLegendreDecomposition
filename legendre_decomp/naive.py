@@ -8,7 +8,7 @@ from numpy.typing import NDArray
 from scipy.special import logsumexp
 
 
-def kl(P: NDArray[np.float_], Q: NDArray[np.float_]) -> np.float_:
+def kl(P: NDArray[np.float64], Q: NDArray[np.float64]) -> np.float64:
     """Kullback-Leibler divergence.
 
     Args:
@@ -21,7 +21,7 @@ def kl(P: NDArray[np.float_], Q: NDArray[np.float_]) -> np.float_:
     return np.sum(P * np.log(P / Q)) - np.sum(P) + np.sum(Q)
 
 
-def get_eta(Q: NDArray[np.float_], D: int) -> NDArray[np.float_]:
+def get_eta(Q: NDArray[np.float64], D: int) -> NDArray[np.float64]:
     """Eta tensor.
 
     Args:
@@ -36,7 +36,7 @@ def get_eta(Q: NDArray[np.float_], D: int) -> NDArray[np.float_]:
     return Q
 
 
-def get_h(theta: NDArray[np.float_], D: int) -> NDArray[np.float_]:
+def get_h(theta: NDArray[np.float64], D: int) -> NDArray[np.float64]:
     """H tensor.
 
     Args:
@@ -52,7 +52,7 @@ def get_h(theta: NDArray[np.float_], D: int) -> NDArray[np.float_]:
 
 
 def LD(
-    X: NDArray[np.float_],
+    X: NDArray[np.float64],
     B: NDArray[np.intp] | list[tuple[int, ...]] | None = None,
     order: int = 2,
     n_iter: int = 10,
@@ -61,7 +61,7 @@ def LD(
     error_tol: float = 1.0e-5,
     ngd: bool = True,
     verbose: bool = True,
-) -> tuple[list[list[float]], np.float_, NDArray[np.float_], NDArray[np.float_]]:
+) -> tuple[list[list[float]], np.float64, NDArray[np.float64], NDArray[np.float64]]:
     """Compute many-body tensor approximation.
 
     Args:

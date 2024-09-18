@@ -8,12 +8,12 @@ from PIL import Image
 
 
 @pytest.fixture
-def random_X_array() -> NDArray[np.float_]:
+def random_X_array() -> NDArray[np.float64]:
     return np.random.uniform(0, 0.1, size=(10, 10, 10, 10))
 
 
 @pytest.fixture
-def coil_100_array() -> NDArray[np.float_]:
+def coil_100_array() -> NDArray[np.float64]:
     X = []
     for k in range(1, 5):
         file_name = Path("tests") / "resources" / "coil-100" / f"obj{k}__0.png"
@@ -28,7 +28,7 @@ def coil_100_array() -> NDArray[np.float_]:
 
 
 @pytest.fixture
-def movie_lens_array() -> NDArray[np.float_]:
+def movie_lens_array() -> NDArray[np.float64]:
     movies_df = pd.read_csv(Path("tests") / "resources" / "ml-latest-small" / "movies.csv")
     ratings_df = pd.read_csv(Path("tests") / "resources" / "ml-latest-small" / "ratings.csv")
 
