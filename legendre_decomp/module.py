@@ -19,7 +19,7 @@ except ImportError:
 from .utils import default_B
 
 
-def kl(P: NDArray[np.float_], Q: NDArray[np.float_], xp: ModuleType = cp) -> np.float_:
+def kl(P: NDArray[np.float64], Q: NDArray[np.float64], xp: ModuleType = cp) -> np.float64:
     """Kullback-Leibler divergence.
 
     Args:
@@ -33,7 +33,7 @@ def kl(P: NDArray[np.float_], Q: NDArray[np.float_], xp: ModuleType = cp) -> np.
     return xp.sum(P * xp.log(P / Q)) - xp.sum(P) + xp.sum(Q)
 
 
-def get_eta(Q: NDArray[np.float_], D: int, xp: ModuleType = cp) -> NDArray[np.float_]:
+def get_eta(Q: NDArray[np.float64], D: int, xp: ModuleType = cp) -> NDArray[np.float64]:
     """Eta tensor.
 
     Args:
@@ -49,7 +49,7 @@ def get_eta(Q: NDArray[np.float_], D: int, xp: ModuleType = cp) -> NDArray[np.fl
     return Q
 
 
-def get_h(theta: NDArray[np.float_], D: int, xp: ModuleType = cp) -> NDArray[np.float_]:
+def get_h(theta: NDArray[np.float64], D: int, xp: ModuleType = cp) -> NDArray[np.float64]:
     """H tensor.
 
     Args:
@@ -65,7 +65,7 @@ def get_h(theta: NDArray[np.float_], D: int, xp: ModuleType = cp) -> NDArray[np.
     return theta
 
 
-def LD(X: NDArray[np.float_],
+def LD(X: NDArray[np.float64],
     B: NDArray[np.intp] | list[tuple[int, ...]] | None = None,
     order: int = 2,
     n_iter: int = 10,
@@ -77,7 +77,7 @@ def LD(X: NDArray[np.float_],
     gpu: bool = True,
     exit_abs: bool = False,
     dtype: np.dtype | None = None,
-) -> tuple[list[list[float]], np.float_, NDArray[np.float_], NDArray[np.float_]]:
+) -> tuple[list[list[float]], np.float64, NDArray[np.float64], NDArray[np.float64]]:
     """Compute many-body tensor approximation.
 
     Args:
@@ -107,11 +107,11 @@ def LD(X: NDArray[np.float_],
 
     if exit_abs:
 
-        def within_tolerance(kld: np.float_, prev_kld: np.float_):
+        def within_tolerance(kld: np.float64, prev_kld: np.float64):
             return abs(prev_kld - kld) < error_tol
     else:
 
-        def within_tolerance(kld: np.float_, prev_kld: np.float_):
+        def within_tolerance(kld: np.float64, prev_kld: np.float64):
             return prev_kld - kld < error_tol
 
     if gpu:
