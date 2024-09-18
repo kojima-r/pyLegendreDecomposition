@@ -119,16 +119,16 @@ def LD(X: NDArray[np.float64],
         def within_tolerance(kld: np.float64, prev_kld: np.float64):
             return prev_kld - kld < error_tol
 
-    xp = cp.get_array_module(X)
     if gpu:
         X = cp.asarray(X, dtype=dtype)
         eps = cp.asarray(eps, dtype=dtype)
         lr = cp.asarray(lr, dtype=dtype)
         logsumexp = cupy_logsumexp
-        if xp==np and verbose:
+        if cp==np and verbose:
             print("GPU mode is disabled because cupy module does not installed")
     else:
         logsumexp = scipy_logsumexp
+    xp = cp.get_array_module(X)
 
     if verbose:
         print("Constructing B")
