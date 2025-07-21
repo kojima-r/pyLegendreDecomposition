@@ -164,16 +164,18 @@ def LD_MBA(
         eps = cp.asarray(eps, dtype=dtype)
         lr = cp.asarray(lr, dtype=dtype)
         logsumexp = cupy_logsumexp
+        xp=cp
         if cp==np and verbose:
             print("GPU mode is disabled because cupy module does not installed")
     else:
         logsumexp = scipy_logsumexp
+        xp=np
     all_history_kl = []
     D = len(X.shape)
     S = X.shape
     if I is None:
         I = [e for e in itertools.combinations(list(range(D)), order)]
-    scaleX = cp.sum(X + eps)
+    scaleX = xp.sum(X + eps)
     P = (X + eps) / scaleX
     # update: theta => H => Q
     theta, theta_mask=init_theta(I, S)
@@ -185,7 +187,8 @@ def LD_MBA(
     kld = kl(P, Q)
     history_kl.append(kld)
     if verbose:
-        print("iter=", 0, "kl=", kld, "mse=", cp.mean((P - Q) ** 2))
+        mse=xp.mean((P - Q) ** 2)
+        print("iter=", 0, "kl=", kld, "mse=", mse)
     ### eta_hat
     eta_hat = get_eta(P, D)
     eta_hat_b=eta_hat[theta_mask==1]
@@ -198,10 +201,10 @@ def LD_MBA(
             G,eta_b,I_masked=compute_G(eta,theta_mask)
             # theta_b[1:] -= lr*cp.linalg.pinv(G[1:,1:])@(eta_b[1:]-eta_hat_b[1:])
             if ngd_lstsq:
-                v = cp.linalg.lstsq(G[1:, 1:], lr * (eta_b[1:] - eta_hat_b[1:]), rcond=None)[0]
+                v = xp.linalg.lstsq(G[1:, 1:], lr * (eta_b[1:] - eta_hat_b[1:]), rcond=None)[0]
                 theta_b[1:] -= v
             else:
-                v = cp.linalg.solve(G[1:, 1:], lr * (eta_b[1:] - eta_hat_b[1:]))
+                v = xp.linalg.solve(G[1:, 1:], lr * (eta_b[1:] - eta_hat_b[1:]))
                 theta_b[1:] -= v
             theta[tuple(I_masked.T)] = theta_b
         else:
@@ -213,10 +216,10 @@ def LD_MBA(
         kld = kl(P, Q)
         history_kl.append(kld)
         if verbose:
-            print("iter=", i + 1, "kl=", kld, "mse=", cp.mean((P - Q) ** 2))
+            print("iter=", i + 1, "kl=", kld, "mse=", xp.mean((P - Q) ** 2))
         if prev_kld is not None and prev_kld - kld < error_tol:
             break
-        if cp.isnan(kld) or cp.isinf(kld) or cp.isneginf(kld):
+        if xp.isnan(kld) or xp.isinf(kld) or xp.isneginf(kld):
             break
         prev_kld = kld
     all_history_kl.append([float(x) for x in history_kl])
