@@ -178,9 +178,9 @@ def LD_MBA(
     scaleX = xp.sum(X + eps)
     P = (X + eps) / scaleX
     # update: theta => H => Q
-    theta, theta_mask=init_theta(I, S)
-    h=get_h(theta,D)
-    Q=get_q(h,gpu)
+    theta, theta_mask=init_theta(I, S, xp=xp)
+    h=get_h(theta,D, xp=xp)
+    Q=get_q(h,gpu, xp=xp)
     # evaluation
     history_kl = []
     prev_kld = None
@@ -190,15 +190,15 @@ def LD_MBA(
         mse=xp.mean((P - Q) ** 2)
         print("iter=", 0, "kl=", kld, "mse=", mse)
     ### eta_hat
-    eta_hat = get_eta(P, D)
+    eta_hat = get_eta(P, D, xp=xp)
     eta_hat_b=eta_hat[theta_mask==1]
     tol_cnt=0
     for i in range(n_iter):
-        eta = get_eta(Q, D)
+        eta = get_eta(Q, D, xp=xp)
         # update theta using eta
         if ngd:
             theta_b=theta[theta_mask==1]
-            G,eta_b,I_masked=compute_G(eta,theta_mask)
+            G,eta_b,I_masked=compute_G(eta,theta_mask, xp=xp)
             # theta_b[1:] -= lr*cp.linalg.pinv(G[1:,1:])@(eta_b[1:]-eta_hat_b[1:])
             if ngd_lstsq:
                 v = xp.linalg.lstsq(G[1:, 1:], lr * (eta_b[1:] - eta_hat_b[1:]), rcond=None)[0]
@@ -210,10 +210,10 @@ def LD_MBA(
         else:
             theta-=lr*(eta-eta_hat)*theta_mask
         # update: theta => H => Q
-        h=get_h(theta,D)
-        Q=get_q(h,gpu)
+        h=get_h(theta,D, xp=xp)
+        Q=get_q(h,gpu, xp=xp)
         # evaluation
-        kld = kl(P, Q)
+        kld = kl(P, Q, xp=xp)
         history_kl.append(kld)
         if verbose:
             print("iter=", i + 1, "kl=", kld, "mse=", xp.mean((P - Q) ** 2))
