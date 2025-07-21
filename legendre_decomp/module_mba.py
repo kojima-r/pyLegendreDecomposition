@@ -184,7 +184,7 @@ def LD_MBA(
     # evaluation
     history_kl = []
     prev_kld = None
-    kld = kl(P, Q)
+    kld = kl(P, Q, xp=xp)
     history_kl.append(kld)
     if verbose:
         mse=xp.mean((P - Q) ** 2)
