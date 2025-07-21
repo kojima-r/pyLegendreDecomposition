@@ -5,8 +5,10 @@ from types import ModuleType
 import numpy as np
 from numpy.typing import NDArray
 from scipy.special import logsumexp as scipy_logsumexp
-
+import os
 try:
+    if os.getenv("LEGENDRE_DECOMP_DISABLE_CUPY") == "1":
+        raise ImportError()
     import cupy as cp
     from cupyx.scipy.special import logsumexp as cupy_logsumexp
     def xp_get(val):
