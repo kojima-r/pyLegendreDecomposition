@@ -230,3 +230,61 @@ def LD_MBA(
         theta = xp_get(theta)  # type: ignore
     return all_history_kl, scaleX, P, Q, theta  # type: ignore
 
+
+def get_weight(shape, I_x=None, order=2, xp: ModuleType = cp):
+    W=xp.zeros(X.shape)
+    D=len(X.shape)
+    if I_x is None:
+        I_x=[e for e in itertools.combinations(list(range(D)), order)]
+    for e in I_x:
+        s=[0]*D
+        for i in e:
+            s[i]=slice(None)
+        W[tuple(s)]+=1
+    return W,I_x
+
+def compute_nbody(theta, shape, I_x=None, order=2, dtype=None, gpu=True, verbose=False):
+    if gpu:
+        theta = cp.asarray(theta, dtype=dtype)
+        if cp==np and verbose:
+            print("GPU mode is disabled because cupy module does not installed")
+        xp = cp
+    else:
+        xp = np
+    W,I_x=get_weight(shape, I_x, order,xp=xp)
+    D=len(shape)
+    h=get_h(theta, D, xp=xp)
+    logz=-theta[tuple([0]*D)]
+    #logz=logsumexp(h)
+
+    X_out=[]
+    for e in I_x:
+        s=[0]*D
+        for i in e:
+            s[i]=slice(None)
+        h_=h[tuple(s)]/W[tuple(s)]-logz/len(I_x)
+        x_=xp.exp(h_)
+        if gpu:
+          x_ = xp_get(x_)  # type: ignore
+        X_out.append((e,x_))
+    return X_out
+
+def recons_nbody(X_out, D, rescale=True, dtype=None, gpu=True):
+    if gpu:
+        xp = cp
+    else:
+        xp = np
+    l=[]
+    for e,x_ in X_out:
+        if gpu:
+          x_ = cp.asarray(x_, dtype=dtype)
+        l.append(x_)
+        l.append(e)
+    l.append(tuple(list(range(D))))
+    Q2=xp.einsum(*l)
+    if rescale:
+        Q2=Q2/xp.sum(Q2)
+    if gpu:
+        Q2 = xp_get(Q2)  # type: ignore
+    return Q2
+
