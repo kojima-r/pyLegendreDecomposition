@@ -232,8 +232,8 @@ def LD_MBA(
 
 
 def get_weight(shape, I_x=None, order=2, xp: ModuleType = cp):
-    W=xp.zeros(X.shape)
-    D=len(X.shape)
+    W=xp.zeros(shape)
+    D=len(shape)
     if I_x is None:
         I_x=[e for e in itertools.combinations(list(range(D)), order)]
     for e in I_x:
