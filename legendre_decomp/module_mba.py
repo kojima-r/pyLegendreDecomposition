@@ -267,7 +267,14 @@ def compute_nbody(theta, shape, I_x=None, order=2, dtype=None, gpu=True, verbose
         if gpu:
           x_ = xp_get(x_)  # type: ignore
         X_out.append((e,x_))
-    return X_out
+    ## transepose
+    new_X_out=[]
+    for k,x_ in X_out:
+        temp=[(org_order,new_i) for new_i,(_,org_order) in enumerate(sorted((v,org_order)for org_order,v in enumerate(k)))]
+        tpl=tuple([new_i for _,new_i in sorted(temp)])
+        y_=xp.transpose(x_,tpl)
+        new_X_out.append((k,y_))
+    return new_X_out
 
 def recons_nbody(X_out, D, rescale=True, dtype=None, gpu=True):
     if gpu:
