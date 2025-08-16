@@ -94,7 +94,7 @@ def get_slice(key, D):
         indices[k]=slice(None)
     return tuple(indices)
 
-def init_theta(keys,shape,theta0_flag=False, xp: ModuleType = cp):
+def initialize_theta(keys,shape,theta0_flag=False, xp: ModuleType = cp):
     theta=xp.random.normal(0,0.1,shape)
     mask=xp.zeros(shape)
     for key in keys:
@@ -133,6 +133,8 @@ def LD_MBA(
     lr: float = 1.0,
     eps: float = 1.0e-5,
     error_tol: float = 1.0e-5,
+    init_theta: NDArray[np.float64]|None =None,
+    init_theta_mask: NDArray[np.float64]|None =None,
     ngd: bool = True,
     ngd_lstsq =True,
     verbose: bool = True,
@@ -178,7 +180,11 @@ def LD_MBA(
     scaleX = xp.sum(X + eps)
     P = (X + eps) / scaleX
     # update: theta => H => Q
-    theta, theta_mask=init_theta(I, S, xp=xp)
+    if init_theta is None and init_theta_mask is None:
+        theta, theta_mask=initialize_theta(I, S, xp=xp)
+    else:
+        theta =init_theta
+        theta_mask =init_theta_mask
     h=get_h(theta,D, xp=xp)
     Q=get_q(h,gpu, xp=xp)
     # evaluation
