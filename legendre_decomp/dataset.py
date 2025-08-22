@@ -252,3 +252,66 @@ def build_matrix_ring_factor_diff_size(low=0.0, high=0.1, order=3):
     #
     X = np.einsum(*l, [i for i in range(N)])
     return X, {"x_list": X_list}
+
+def build_bmatrix_train_factor(prob=0.5, M=3, order=3):
+    l = []
+    X_list = []
+    N = order - 1
+    for i in range(N):
+        X = np.random.binomial(1, prob, size=(M, M))
+        l.append(X)
+        X_list.append(X)
+        l.append((i, i + 1))
+    X = np.einsum(*l, [i for i in range(N + 1)])
+    return X, {"x_list": X_list}
+
+
+def build_bmatrix_train_factor_diff_size(prob=0.5, order=3):
+    l = []
+    X_list = []
+    N = order - 1
+    for i in range(N):
+        X = np.random.binomial(1, prob, size=(i + 2, i + 3))
+        l.append(X)
+        X_list.append(X)
+        l.append((i, i + 1))
+    X = np.einsum(*l, [i for i in range(N + 1)])
+    return X, {"x_list": X_list}
+
+
+def build_bmatrix_ring_factor(prob=0.5, M=3, order=3):
+    l = []
+    X_list = []
+    N = order
+    for i in range(N - 1):
+        X = np.random.binomial(1, prob, size=(M, M))
+        l.append(X)
+        X_list.append(X)
+        l.append((i, i + 1))
+    X = np.random.binomial(1, prob, size=(M, M))
+    l.append(X)
+    X_list.append(X)
+    l.append((0, N - 1))
+    #
+    X = np.einsum(*l, [i for i in range(N)])
+    return X, {"x_list": X_list}
+
+
+def build_bmatrix_ring_factor_diff_size(prob=0.5, order=3):
+    l = []
+    X_list = []
+    N = order
+    for i in range(N - 1):
+        X = np.random.binomial(1, prob, size=(i + 2, i + 3))
+        l.append(X)
+        X_list.append(X)
+        l.append((i, i + 1))
+    X = np.random.binomial(1, prob, size=(2, N - 1 +2))
+    l.append(X)
+    X_list.append(X)
+    l.append((0, N - 1))
+    #
+    X = np.einsum(*l, [i for i in range(N)])
+    return X, {"x_list": X_list}
+
+
