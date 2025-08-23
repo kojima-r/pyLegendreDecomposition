@@ -259,7 +259,7 @@ def compute_nbody(theta, shape, I_x=None, order=2, dtype=None, gpu=True, verbose
         xp = np
     W,I_x=get_weight(shape, I_x, order,xp=xp)
     D=len(shape)
-    h=get_h(theta, D, xp=xp)
+    h=get_h(theta/(W+1.0e-10), D, xp=xp)
     logz=-theta[tuple([0]*D)]
     #logz=logsumexp(h)
 
@@ -268,7 +268,8 @@ def compute_nbody(theta, shape, I_x=None, order=2, dtype=None, gpu=True, verbose
         s=[0]*D
         for i in e:
             s[i]=slice(None)
-        h_=h[tuple(s)]/W[tuple(s)]-logz/len(I_x)
+        #h_=h[tuple(s)]/W[tuple(s)]-logz/len(I_x)
+        h_=h[tuple(s)]-logz/len(I_x)
         x_=xp.exp(h_)
         if gpu:
           x_ = xp_get(x_)  # type: ignore
