@@ -192,125 +192,201 @@ def build_movielens(movie_thresh=100, user_thresh=20):
     return M, {"user_list": uid_list, "movie_list": mid_list, "genre_list": genre_list}
 
 
-def build_matrix_train_factor(low=0.0, high=0.1, M=3, order=3):
+def build_matrix_train_factor(low=0.0, high=0.1, M=3, order=3, independent=None):
+    l = []
+    X_list = []
+    I_list = []
+    N = order - 1
+    for i in range(N):
+        if independent is not None and i in independent:
+            if i == 0:
+                X = np.random.uniform(low, high, size=(M,))
+                l.append(X)
+                X_list.append(X)
+                l.append((i,))
+                I_list.append((i,))
+            elif i == N - 1:
+                X = np.random.uniform(low, high, size=(M,))
+                l.append(X)
+                X_list.append(X)
+                l.append((i + 1,))
+                I_list.append((i + 1,))
+        else:
+            X = np.random.uniform(low, high, size=(M, M))
+            l.append(X)
+            X_list.append(X)
+            l.append((i, i + 1))
+            I_list.append((i, i + 1))
+    X = np.einsum(*l, [i for i in range(N + 1)])
+    return X, {"x_list": X_list, "I": I_list}
+
+
+def build_matrix_train_factor_diff_size(low=0.0, high=0.1, order=3, independent=None):
     l = []
     X_list = []
     N = order - 1
+    I_list = []
     for i in range(N):
-        X = np.random.uniform(0, 0.1, size=(M, M))
-        l.append(X)
-        X_list.append(X)
-        l.append((i, i + 1))
+        if independent is not None and i in independent:
+            if i == 0:
+                X = np.random.uniform(low, high, size=(i + 2,))
+                l.append(X)
+                X_list.append(X)
+                l.append((i,))
+                I_list.append((i,))
+            elif i == N - 1:
+                X = np.random.uniform(low, high, size=(i + 3,))
+                l.append(X)
+                X_list.append(X)
+                l.append((i + 1,))
+                I_list.append((i + 1,))
+        else:
+            X = np.random.uniform(low, high, size=(i + 2, i + 3))
+            l.append(X)
+            X_list.append(X)
+            l.append((i, i + 1))
+            I_list.append((i, i + 1))
     X = np.einsum(*l, [i for i in range(N + 1)])
-    return X, {"x_list": X_list}
-
-
-def build_matrix_train_factor_diff_size(low=0.0, high=0.1, order=3):
-    l = []
-    X_list = []
-    N = order - 1
-    for i in range(N):
-        X = np.random.uniform(0, 0.1, size=(i + 2, i + 3))
-        l.append(X)
-        X_list.append(X)
-        l.append((i, i + 1))
-    X = np.einsum(*l, [i for i in range(N + 1)])
-    return X, {"x_list": X_list}
+    return X, {"x_list": X_list, "I": I_list}
 
 
 def build_matrix_ring_factor(low=0.0, high=0.1, M=3, order=3):
     l = []
     X_list = []
     N = order
+    I_list = []
     for i in range(N - 1):
         X = np.random.uniform(0, 0.1, size=(M, M))
         l.append(X)
         X_list.append(X)
         l.append((i, i + 1))
+        I_list.append((i, i + 1))
     X = np.random.uniform(0, 0.1, size=(M, M))
     l.append(X)
     X_list.append(X)
     l.append((0, N - 1))
+    I_list.append((0, N - 1))
     #
     X = np.einsum(*l, [i for i in range(N)])
-    return X, {"x_list": X_list}
+    return X, {"x_list": X_list, "I": I_list}
 
 
 def build_matrix_ring_factor_diff_size(low=0.0, high=0.1, order=3):
     l = []
     X_list = []
     N = order
+    I_list = []
     for i in range(N - 1):
         X = np.random.uniform(0, 0.1, size=(i + 2, i + 3))
         l.append(X)
         X_list.append(X)
         l.append((i, i + 1))
+        I_list.append((i, i + 1))
     X = np.random.uniform(0, 0.1, size=(2, N - 1 + 2))
     l.append(X)
     X_list.append(X)
     l.append((0, N - 1))
+    I_list.append((0, N - 1))
     #
     X = np.einsum(*l, [i for i in range(N)])
-    return X, {"x_list": X_list}
+    return X, {"x_list": X_list, "I": I_list}
 
 
-def build_bmatrix_train_factor(prob=0.5, M=3, order=3):
+def build_bmatrix_train_factor(prob=0.5, M=3, order=3, independent=None):
+    l = []
+    X_list = []
+    I_list = []
+    N = order - 1
+    for i in range(N):
+        if independent is not None and i in independent:
+            if i == 0:
+                X = np.random.binomial(1, prob, size=(M,))
+                l.append(X)
+                X_list.append(X)
+                l.append((i,))
+                I_list.append((i,))
+            elif i == N - 1:
+                X = np.random.binomial(1, prob, size=(M,))
+                l.append(X)
+                X_list.append(X)
+                l.append((i + 1,))
+                I_list.append((i + 1,))
+        else:
+            X = np.random.binomial(1, prob, size=(M, M))
+            l.append(X)
+            X_list.append(X)
+            l.append((i, i + 1))
+            I_list.append((i, i + 1))
+    X = np.einsum(*l, [i for i in range(N + 1)])
+    return X, {"x_list": X_list, "I": I_list}
+
+
+def build_bmatrix_train_factor_diff_size(prob=0.5, order=3, independent=None):
     l = []
     X_list = []
     N = order - 1
+    I_list = []
     for i in range(N):
-        X = np.random.binomial(1, prob, size=(M, M))
-        l.append(X)
-        X_list.append(X)
-        l.append((i, i + 1))
+        if independent is not None and i in independent:
+            if i == 0:
+                X = np.random.binomial(1, prob, size=(i + 2,))
+                l.append(X)
+                X_list.append(X)
+                l.append((i,))
+                I_list.append((i,))
+            elif i == N - 1:
+                X = np.random.binomial(1, prob, size=(i + 3,))
+                l.append(X)
+                X_list.append(X)
+                l.append((i + 1,))
+                I_list.append((i + 1,))
+        else:
+            X = np.random.binomial(1, prob, size=(i + 2, i + 3))
+            l.append(X)
+            X_list.append(X)
+            l.append((i, i + 1))
+            I_list.append((i, i + 1))
     X = np.einsum(*l, [i for i in range(N + 1)])
-    return X, {"x_list": X_list}
-
-
-def build_bmatrix_train_factor_diff_size(prob=0.5, order=3):
-    l = []
-    X_list = []
-    N = order - 1
-    for i in range(N):
-        X = np.random.binomial(1, prob, size=(i + 2, i + 3))
-        l.append(X)
-        X_list.append(X)
-        l.append((i, i + 1))
-    X = np.einsum(*l, [i for i in range(N + 1)])
-    return X, {"x_list": X_list}
+    return X, {"x_list": X_list, "I": I_list}
 
 
 def build_bmatrix_ring_factor(prob=0.5, M=3, order=3):
     l = []
     X_list = []
     N = order
+    I_list = []
     for i in range(N - 1):
         X = np.random.binomial(1, prob, size=(M, M))
         l.append(X)
         X_list.append(X)
         l.append((i, i + 1))
+        I_list.append((i, i + 1))
     X = np.random.binomial(1, prob, size=(M, M))
     l.append(X)
     X_list.append(X)
     l.append((0, N - 1))
+    I_list.append((0, N - 1))
     #
     X = np.einsum(*l, [i for i in range(N)])
-    return X, {"x_list": X_list}
+    return X, {"x_list": X_list, "I": I_list}
 
 
 def build_bmatrix_ring_factor_diff_size(prob=0.5, order=3):
     l = []
     X_list = []
     N = order
+    I_list = []
     for i in range(N - 1):
         X = np.random.binomial(1, prob, size=(i + 2, i + 3))
         l.append(X)
         X_list.append(X)
         l.append((i, i + 1))
+        I_list.append((i, i + 1))
     X = np.random.binomial(1, prob, size=(2, N - 1 + 2))
     l.append(X)
     X_list.append(X)
     l.append((0, N - 1))
+    I_list.append((0, N - 1))
     #
     X = np.einsum(*l, [i for i in range(N)])
-    return X, {"x_list": X_list}
+    return X, {"x_list": X_list, "I": I_list}
