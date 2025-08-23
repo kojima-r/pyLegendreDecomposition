@@ -119,7 +119,7 @@ def build_movielens(movie_thresh=100, user_thresh=20):
     # count movies and users to decide target users/movies
     movie_count = Counter()
     for i, r in df.iterrows():
-        # Get the movie ID and convert it to integer
+        m = int(r["movieId"])
         movie_count[m] += 1
 
     user_count = Counter()
