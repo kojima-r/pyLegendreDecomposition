@@ -1,0 +1,58 @@
+legendre_decomp.dataset
+=======================
+
+.. py:module:: legendre_decomp.dataset
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   legendre_decomp.dataset.build_coil
+   legendre_decomp.dataset.draw_coil
+   legendre_decomp.dataset.draw_coil_recons
+   legendre_decomp.dataset.build_random
+   legendre_decomp.dataset.build_random_diff_size
+   legendre_decomp.dataset.build_movielens
+   legendre_decomp.dataset.build_matrix_train_factor
+   legendre_decomp.dataset.build_matrix_train_factor_diff_size
+   legendre_decomp.dataset.build_matrix_ring_factor
+   legendre_decomp.dataset.build_matrix_ring_factor_diff_size
+   legendre_decomp.dataset.build_bmatrix_train_factor
+   legendre_decomp.dataset.build_bmatrix_train_factor_diff_size
+   legendre_decomp.dataset.build_bmatrix_ring_factor
+   legendre_decomp.dataset.build_bmatrix_ring_factor_diff_size
+
+
+Module Contents
+---------------
+
+.. py:function:: build_coil(N=5, W=32, H=32, redownload=False)
+
+.. py:function:: draw_coil(Q, scaleX)
+
+.. py:function:: draw_coil_recons(Q, scaleX)
+
+.. py:function:: build_random(N, order, low=0.0, high=0.1)
+
+.. py:function:: build_random_diff_size(order, low=0.0, high=0.1)
+
+.. py:function:: build_movielens(movie_thresh=100, user_thresh=20)
+
+.. py:function:: build_matrix_train_factor(low=0.0, high=0.1, M=3, order=3, independent=None)
+
+.. py:function:: build_matrix_train_factor_diff_size(low=0.0, high=0.1, order=3, independent=None)
+
+.. py:function:: build_matrix_ring_factor(low=0.0, high=0.1, M=3, order=3)
+
+.. py:function:: build_matrix_ring_factor_diff_size(low=0.0, high=0.1, order=3)
+
+.. py:function:: build_bmatrix_train_factor(prob=0.5, M=3, order=3, independent=None)
+
+.. py:function:: build_bmatrix_train_factor_diff_size(prob=0.5, order=3, independent=None)
+
+.. py:function:: build_bmatrix_ring_factor(prob=0.5, M=3, order=3)
+
+.. py:function:: build_bmatrix_ring_factor_diff_size(prob=0.5, order=3)
+

@@ -10,7 +10,9 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
+   /autoapi/legendre_decomp/dataset/index
    /autoapi/legendre_decomp/module/index
+   /autoapi/legendre_decomp/module_mba/index
    /autoapi/legendre_decomp/naive/index
    /autoapi/legendre_decomp/utils/index
 
@@ -20,67 +22,12 @@ Functions
 
 .. autoapisummary::
 
-   legendre_decomp.xp_get
-   legendre_decomp.default_B
-   legendre_decomp.kl
-   legendre_decomp.get_eta
-   legendre_decomp.get_h
    legendre_decomp.LD
+   legendre_decomp.LD_MBA
 
 
 Package Contents
 ----------------
-
-.. py:function:: xp_get(val)
-
-.. py:function:: default_B(shape, order, xp = np)
-
-   Vectorized implementation of the default B tensor.
-
-   :param shape: Shape of the corresponding X tensor.
-   :param order: Order of the B tensor.
-   :param xp: Array module, either numpy (CPU) or cupy (CUDA/GPU)
-   :type xp: ModuleType
-
-   :returns: Default B tensor of specified order.
-   :rtype: array-like
-
-
-.. py:function:: kl(P, Q, xp = cp)
-
-   Kullback-Leibler divergence.
-
-   :param P: P tensor
-   :param Q: Q tensor
-   :param xp: Array module, either numpy (CPU) or cupy
-   :type xp: ModuleType
-
-   :returns: KL divergence.
-
-
-.. py:function:: get_eta(Q, D, xp = cp)
-
-   Eta tensor.
-
-   :param Q: Q tensor
-   :param D: Dimensionality
-   :param xp: Array module, either numpy (CPU) or cupy
-   :type xp: ModuleType
-
-   :returns: Eta tensor.
-
-
-.. py:function:: get_h(theta, D, xp = cp)
-
-   H tensor.
-
-   :param theta: Theta tensor
-   :param D: Dimensionality
-   :param xp: Array module, either numpy (CPU) or cupy
-   :type xp: ModuleType
-
-   :returns: Updated theta.
-
 
 .. py:function:: LD(X, B = None, order = 2, n_iter = 10, lr = 1.0, eps = 1e-05, error_tol = 1e-05, ngd = True, ngd_lstsq = False, verbose = True, gpu = True, exit_abs = False, dtype = None)
 
@@ -100,6 +47,27 @@ Package Contents
    :param exit_abs: Previous implementation (wrongly?) uses kl- kl_prev as iteration exit criterion.
                     Use abs(kl - kl_prev) instead.
    :param dtype: By default, the data-type is inferred from the input data.
+
+   :returns: KL divergence history.
+             scaleX: Scaled X tensor.
+             Q: Q tensor.
+             theta: Theta.
+   :rtype: all_history_kl
+
+
+.. py:function:: LD_MBA(X, I = None, order = 2, n_iter = 100, lr = 1.0, eps = 1e-05, error_tol = 1e-05, init_theta = None, init_theta_mask = None, ngd = True, ngd_lstsq=True, verbose = True, gpu = True, dtype = None)
+
+   Compute many-body tensor approximation.
+
+   :param X: Input tensor.
+   :param I: A list of pairs of indices that represent slices with nonzero elements in the parameter tensor.
+             e.g. [(0,1),(2,),(1,3)]
+   :param n_iter: Maximum number of iteration.
+   :param lr: Learning rate.
+   :param eps: (see paper).
+   :param error_tol: KL divergence tolerance for the iteration.
+   :param ngd: Use natural gradient.
+   :param verbose: Print debug messages.
 
    :returns: KL divergence history.
              scaleX: Scaled X tensor.
