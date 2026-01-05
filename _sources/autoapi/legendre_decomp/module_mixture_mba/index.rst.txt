@@ -1,0 +1,87 @@
+legendre_decomp.module_mixture_mba
+==================================
+
+.. py:module:: legendre_decomp.module_mixture_mba
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   legendre_decomp.module_mixture_mba.LDComponent
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   legendre_decomp.module_mixture_mba.xp_get
+   legendre_decomp.module_mixture_mba.mixQ
+   legendre_decomp.module_mixture_mba.MixLD_MBA
+
+
+Module Contents
+---------------
+
+.. py:function:: xp_get(val)
+
+.. py:class:: LDComponent
+
+   .. py:attribute:: I
+      :type:  List[Tuple[int, Ellipsis]]
+
+
+   .. py:attribute:: theta
+      :type:  numpy.typing.NDArray[numpy.float64] | None
+      :value: None
+
+
+
+   .. py:attribute:: theta_mask
+      :type:  numpy.typing.NDArray[numpy.float64] | None
+      :value: None
+
+
+
+   .. py:attribute:: Q
+      :type:  numpy.typing.NDArray[numpy.float64] | None
+      :value: None
+
+
+
+   .. py:attribute:: gamma
+      :type:  numpy.typing.NDArray[numpy.float64] | None
+      :value: None
+
+
+
+   .. py:attribute:: pi
+      :type:  float
+      :value: 1.0
+
+
+
+.. py:function:: mixQ(components, xp = cp)
+
+.. py:function:: MixLD_MBA(X, components, n_round = 300, n_iter = 100, lr = 1.0, eps = 1e-05, error_tol = 1e-05, ngd = True, ngd_lstsq=True, verbose = True, gpu = True, dtype = None)
+
+   Compute many-body tensor approximation.
+   :param X: Input tensor.
+   :param I: A list of pairs of indices that represent slices with nonzero elements in the parameter tensor.
+             e.g. [(0,1),(2,),(1,3)]
+   :param n_iter: Maximum number of iteration.
+   :param lr: Learning rate.
+   :param eps: (see paper).
+   :param error_tol: KL divergence tolerance for the iteration.
+   :param ngd: Use natural gradient.
+   :param verbose: Print debug messages.
+
+   :returns: KL divergence history.
+             scaleX: Scaled X tensor.
+             Q: Q tensor.
+             theta: Theta.
+   :rtype: all_history_kl
+
+

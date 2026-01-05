@@ -13,6 +13,7 @@ Submodules
    /autoapi/legendre_decomp/dataset/index
    /autoapi/legendre_decomp/module/index
    /autoapi/legendre_decomp/module_mba/index
+   /autoapi/legendre_decomp/module_mixture_mba/index
    /autoapi/legendre_decomp/naive/index
    /autoapi/legendre_decomp/utils/index
 
