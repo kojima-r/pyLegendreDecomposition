@@ -47,6 +47,7 @@ def MixLD_MBA(
     lr: float = 1.0,
     eps: float = 1.0e-5,
     error_tol: float = 1.0e-5,
+    em_tol: float = 1.0e-5,
     ngd: bool = True,
     ngd_lstsq =True,
     verbose: bool = True,
@@ -59,10 +60,12 @@ def MixLD_MBA(
         X: Input tensor.
         I: A list of pairs of indices that represent slices with nonzero elements in the parameter tensor.
            e.g. [(0,1),(2,),(1,3)]
+        n_round: Maximum number of EM rounds.
         n_iter: Maximum number of iteration.
         lr: Learning rate.
         eps: (see paper).
         error_tol: KL divergence tolerance for the iteration.
+        em_tol: KL divergence tolerance for the EM round.
         ngd: Use natural gradient.
         verbose: Print debug messages.
 
@@ -94,6 +97,7 @@ def MixLD_MBA(
       h=get_h(comp.theta, D, xp)
       comp.Q=get_q(h,gpu, xp)
       comp.pi=1/K
+    prev_kld=None
     for i in range(n_round):
       # Expectation
       ps=mixQ(components, xp)
@@ -121,5 +125,11 @@ def MixLD_MBA(
       mix_history_kl.append(float(kld))
       if verbose:
           print("round=", i + 1, "kl=", kld, "mse=", xp.mean((P - Q) ** 2))
+      if prev_kld is None:
+        prev_kld=kld
+      elif em_tol>0:
+        if prev_kld-kld<em_tol and i>1:
+          break
+      prev_kld=kld
     return mix_history_kl,  scaleX, P, Q, components
 
