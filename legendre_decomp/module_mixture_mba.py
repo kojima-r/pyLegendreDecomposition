@@ -51,6 +51,7 @@ def MixLD_MBA(
     ngd: bool = True,
     ngd_lstsq =True,
     verbose: bool = True,
+    verbose_ld: bool = True,
     gpu: bool=True, # Use GPU (CUDA or ROCm depending on the installed CuPy version).
     dtype: np.dtype | None = None #By default, the data-type is inferred from the input data.
 
@@ -68,6 +69,7 @@ def MixLD_MBA(
         em_tol: KL divergence tolerance for the EM round.
         ngd: Use natural gradient.
         verbose: Print debug messages.
+        verbose_ld: Print debug messages.
 
     Returns:
         all_history_kl: KL divergence history.
@@ -108,7 +110,7 @@ def MixLD_MBA(
       s_pi=0
       for comp in components:
         X_=X*comp.gamma
-        all_history_kl, scaleX, _, Q,theta = LD_MBA(X_,comp.I,init_theta=comp.theta,init_theta_mask=comp.theta_mask,n_iter=n_iter,lr=lr, error_tol=error_tol,gpu=gpu, verbose=False)
+        all_history_kl, scaleX, _, Q,theta = LD_MBA(X_,comp.I,init_theta=comp.theta,init_theta_mask=comp.theta_mask,n_iter=n_iter,lr=lr, error_tol=error_tol,gpu=gpu, verbose=verbose_ld)
 
         if gpu:
           Q = xp.asarray(Q, dtype=dtype)
