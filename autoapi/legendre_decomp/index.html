@@ -255,6 +255,7 @@
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">legendre_decomp</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="dataset/index.html">legendre_decomp.dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="module/index.html">legendre_decomp.module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_cond_mba/index.html">legendre_decomp.module_cond_mba</a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_mba/index.html">legendre_decomp.module_mba</a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_mixture_mba/index.html">legendre_decomp.module_mixture_mba</a></li>
 <li class="toctree-l2"><a class="reference internal" href="naive/index.html">legendre_decomp.naive</a></li>
@@ -329,11 +330,23 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="dataset/index.html">legendre_decomp.dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module/index.html">legendre_decomp.module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_cond_mba/index.html">legendre_decomp.module_cond_mba</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_mba/index.html">legendre_decomp.module_mba</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_mixture_mba/index.html">legendre_decomp.module_mixture_mba</a></li>
 <li class="toctree-l1"><a class="reference internal" href="naive/index.html">legendre_decomp.naive</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils/index.html">legendre_decomp.utils</a></li>
 </ul>
+</div>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#legendre_decomp.LDComponent" title="legendre_decomp.LDComponent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LDComponent</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </section>
 <section id="functions">
@@ -344,6 +357,9 @@
 <td><p>Compute many-body tensor approximation.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#legendre_decomp.LD_MBA" title="legendre_decomp.LD_MBA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LD_MBA</span></code></a>(X[, I, order, n_iter, lr, eps, error_tol, ...])</p></td>
+<td><p>Compute many-body tensor approximation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#legendre_decomp.MixLD_MBA" title="legendre_decomp.MixLD_MBA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MixLD_MBA</span></code></a>(X, components[, n_round, n_iter, lr, eps, ...])</p></td>
 <td><p>Compute many-body tensor approximation.</p></td>
 </tr>
 </tbody>
@@ -422,6 +438,80 @@ theta: Theta.</p>
 </dl>
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="legendre_decomp.LDComponent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">legendre_decomp.</span></span><span class="sig-name descname"><span class="pre">LDComponent</span></span><a class="headerlink" href="#legendre_decomp.LDComponent" title="Link to this definition">#</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="legendre_decomp.LDComponent.I">
+<span class="sig-name descname"><span class="pre">I</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#legendre_decomp.LDComponent.I" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="legendre_decomp.LDComponent.theta">
+<span class="sig-name descname"><span class="pre">theta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.typing.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#legendre_decomp.LDComponent.theta" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="legendre_decomp.LDComponent.theta_mask">
+<span class="sig-name descname"><span class="pre">theta_mask</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.typing.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#legendre_decomp.LDComponent.theta_mask" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="legendre_decomp.LDComponent.Q">
+<span class="sig-name descname"><span class="pre">Q</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.typing.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#legendre_decomp.LDComponent.Q" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="legendre_decomp.LDComponent.gamma">
+<span class="sig-name descname"><span class="pre">gamma</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.typing.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#legendre_decomp.LDComponent.gamma" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="legendre_decomp.LDComponent.pi">
+<span class="sig-name descname"><span class="pre">pi</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></em><a class="headerlink" href="#legendre_decomp.LDComponent.pi" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="legendre_decomp.MixLD_MBA">
+<span class="sig-prename descclassname"><span class="pre">legendre_decomp.</span></span><span class="sig-name descname"><span class="pre">MixLD_MBA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_round</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">em_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ngd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ngd_lstsq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_ld</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#legendre_decomp.MixLD_MBA" title="Link to this definition">#</a></dt>
+<dd><p>Compute many-body tensor approximation.
+:param X: Input tensor.
+:param I: A list of pairs of indices that represent slices with nonzero elements in the parameter tensor.</p>
+<blockquote>
+<div><p>e.g. [(0,1),(2,),(1,3)]</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_round</strong> (<em>int</em>) – Maximum number of EM rounds.</p></li>
+<li><p><strong>n_iter</strong> (<em>int</em>) – Maximum number of iteration.</p></li>
+<li><p><strong>lr</strong> (<em>float</em>) – Learning rate.</p></li>
+<li><p><strong>eps</strong> (<em>float</em>) – (see paper).</p></li>
+<li><p><strong>error_tol</strong> (<em>float</em>) – KL divergence tolerance for the iteration.</p></li>
+<li><p><strong>em_tol</strong> (<em>float</em>) – KL divergence tolerance for the EM round.</p></li>
+<li><p><strong>ngd</strong> (<em>bool</em>) – Use natural gradient.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Print debug messages.</p></li>
+<li><p><strong>verbose_ld</strong> (<em>bool</em>) – Print debug messages.</p></li>
+<li><p><strong>X</strong> (<em>numpy.typing.NDArray</em><em>[</em><em>numpy.float64</em><em>]</em>)</p></li>
+<li><p><strong>components</strong> (<a class="reference internal" href="#legendre_decomp.LDComponent" title="legendre_decomp.LDComponent"><em>LDComponent</em></a>)</p></li>
+<li><p><strong>gpu</strong> (<em>bool</em>)</p></li>
+<li><p><strong>dtype</strong> (<em>numpy.dtype</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>KL divergence history.
+scaleX: Scaled X tensor.
+Q: Q tensor.
+theta: Theta.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>all_history_kl</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -473,10 +563,21 @@ theta: Theta.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#legendre_decomp.LD"><code class="docutils literal notranslate"><span class="pre">LD()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#legendre_decomp.LD_MBA"><code class="docutils literal notranslate"><span class="pre">LD_MBA()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#legendre_decomp.LDComponent"><code class="docutils literal notranslate"><span class="pre">LDComponent</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#legendre_decomp.LDComponent.I"><code class="docutils literal notranslate"><span class="pre">LDComponent.I</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#legendre_decomp.LDComponent.theta"><code class="docutils literal notranslate"><span class="pre">LDComponent.theta</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#legendre_decomp.LDComponent.theta_mask"><code class="docutils literal notranslate"><span class="pre">LDComponent.theta_mask</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#legendre_decomp.LDComponent.Q"><code class="docutils literal notranslate"><span class="pre">LDComponent.Q</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#legendre_decomp.LDComponent.gamma"><code class="docutils literal notranslate"><span class="pre">LDComponent.gamma</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#legendre_decomp.LDComponent.pi"><code class="docutils literal notranslate"><span class="pre">LDComponent.pi</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#legendre_decomp.MixLD_MBA"><code class="docutils literal notranslate"><span class="pre">MixLD_MBA()</span></code></a></li>
 </ul>
 </li>
 </ul>

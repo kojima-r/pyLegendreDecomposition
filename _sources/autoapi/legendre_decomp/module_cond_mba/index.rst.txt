@@ -1,0 +1,28 @@
+legendre_decomp.module_cond_mba
+===============================
+
+.. py:module:: legendre_decomp.module_cond_mba
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   legendre_decomp.module_cond_mba.decomp_given_tensor
+   legendre_decomp.module_cond_mba.build_condition
+   legendre_decomp.module_cond_mba.conditional_decomp_tensor
+   legendre_decomp.module_cond_mba.CLD_MBA
+
+
+Module Contents
+---------------
+
+.. py:function:: decomp_given_tensor(X_, I, n_iter = 100, lr = 1.0, eps = 1e-05, error_tol = 1e-05, ngd = True, ngd_lstsq = True, gpu = True, verbose = True)
+
+.. py:function:: build_condition(theta_dict, I, shape)
+
+.. py:function:: conditional_decomp_tensor(X_, I, I_c, theta, mask, X_out_given_, theta_given, n_iter = 100, lr = 1.0, eps = 1e-05, error_tol = 1e-05, ngd = True, ngd_lstsq = True, verbose = True, verbose_ld = True, gpu = True)
+
+.. py:function:: CLD_MBA(X, I, Y, I_c, n_iter = 100, lr = 1.0, eps = 1e-05, error_tol = 1e-05, ngd = True, ngd_lstsq = True, verbose = False, gpu = True)
+

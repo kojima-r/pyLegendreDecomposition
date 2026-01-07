@@ -12,10 +12,19 @@ Submodules
 
    /autoapi/legendre_decomp/dataset/index
    /autoapi/legendre_decomp/module/index
+   /autoapi/legendre_decomp/module_cond_mba/index
    /autoapi/legendre_decomp/module_mba/index
    /autoapi/legendre_decomp/module_mixture_mba/index
    /autoapi/legendre_decomp/naive/index
    /autoapi/legendre_decomp/utils/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   legendre_decomp.LDComponent
 
 
 Functions
@@ -25,6 +34,7 @@ Functions
 
    legendre_decomp.LD
    legendre_decomp.LD_MBA
+   legendre_decomp.MixLD_MBA
 
 
 Package Contents
@@ -69,6 +79,65 @@ Package Contents
    :param error_tol: KL divergence tolerance for the iteration.
    :param ngd: Use natural gradient.
    :param verbose: Print debug messages.
+
+   :returns: KL divergence history.
+             scaleX: Scaled X tensor.
+             Q: Q tensor.
+             theta: Theta.
+   :rtype: all_history_kl
+
+
+.. py:class:: LDComponent
+
+   .. py:attribute:: I
+      :type:  List[Tuple[int, Ellipsis]]
+
+
+   .. py:attribute:: theta
+      :type:  numpy.typing.NDArray[numpy.float64] | None
+      :value: None
+
+
+
+   .. py:attribute:: theta_mask
+      :type:  numpy.typing.NDArray[numpy.float64] | None
+      :value: None
+
+
+
+   .. py:attribute:: Q
+      :type:  numpy.typing.NDArray[numpy.float64] | None
+      :value: None
+
+
+
+   .. py:attribute:: gamma
+      :type:  numpy.typing.NDArray[numpy.float64] | None
+      :value: None
+
+
+
+   .. py:attribute:: pi
+      :type:  float
+      :value: 1.0
+
+
+
+.. py:function:: MixLD_MBA(X, components, n_round = 300, n_iter = 100, lr = 1.0, eps = 1e-05, error_tol = 1e-05, em_tol = 1e-05, ngd = True, ngd_lstsq=True, verbose = True, verbose_ld = True, gpu = True, dtype = None)
+
+   Compute many-body tensor approximation.
+   :param X: Input tensor.
+   :param I: A list of pairs of indices that represent slices with nonzero elements in the parameter tensor.
+             e.g. [(0,1),(2,),(1,3)]
+   :param n_round: Maximum number of EM rounds.
+   :param n_iter: Maximum number of iteration.
+   :param lr: Learning rate.
+   :param eps: (see paper).
+   :param error_tol: KL divergence tolerance for the iteration.
+   :param em_tol: KL divergence tolerance for the EM round.
+   :param ngd: Use natural gradient.
+   :param verbose: Print debug messages.
+   :param verbose_ld: Print debug messages.
 
    :returns: KL divergence history.
              scaleX: Scaled X tensor.
